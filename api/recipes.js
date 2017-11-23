@@ -2,7 +2,7 @@ const express = require('express');
 const routes = express.Router();
 const Recipe = require('../model/recipe.model');
 const mongodb = require('../config/mongo.db');
-const Ingriedient = require('../model/ingredient.model');
+const Ingriedient = require('../schema/ingredient.schema');
 
 routes.get('/recipes', (req, res) => {
     Recipe.find()

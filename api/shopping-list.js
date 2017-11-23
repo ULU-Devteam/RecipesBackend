@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const Ingredient = require('../model/ingredient.model');
+const Ingredient = require('../schema/ingredient.schema');
 const ShoppingList = require('../model/shoppingList.model');
 
 routes.get('/shoppingList', function (req, res) {

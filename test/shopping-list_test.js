@@ -1,6 +1,6 @@
 const assert = require('assert');
 const ShoppingList = require('../model/shoppingList.model');
-const Ingredient = require('../model/ingredient.model');
+const Ingredient = require('../schema/ingredient.schema');
 
 describe('Querying the shopping-list in the database successfully', () => {
 	let list, testIngredient;
