@@ -4,8 +4,26 @@ const Recipe = require('../model/recipe.model');
 const mongodb = require('../config/mongo.db');
 const Ingriedient = require('../model/ingredient.model');
 
-routes.get('/recipes', function(req, res) {
-    res.status(200).json('die shit werkt')
+routes.get('/recipes', (req, res) => {
+    Recipe.find()
+        .then((recipes) =>{
+            res.status(200).json(recipes);
+        })
+        .catch(() => {
+            res.status(400).json({'error' : 'bad request'})
+        })
+});
+
+routes.get('/recipes/:id', (req, res) => {
+    let recipeId = req.params.id;
+
+    Recipe.findOne({_id : recipeId})
+        .then((recipe) =>{
+            res.status(200).json(recipe);
+        })
+        .catch(() => {
+            res.status(400).json({'error' : 'bad request'})
+        })
 });
 
 routes.post('/recipes', (req, res) =>{
@@ -34,6 +52,36 @@ routes.post('/recipes', (req, res) =>{
                     res.status(400).json(error);
                 });
         });
+});
+
+routes.put('/recipes/:id', (req, res) => {
+    let recipeId = req.params.id;
+    let recipe = req.body;
+
+    Recipe.findOneAndUpdate(
+        recipeId,
+        {name: recipe.name},
+        {imagePath: recipe.imagePath},
+        {description: recipe.description},)
+        .then((recipe) =>{
+            Recipe.findById(recipeId);
+            res.status(200).json(recipe);
+        })
+        .catch(() => {
+            res.status(400).json({'error' : 'bad request'})
+        })
+});
+
+routes.delete('/recipes/:id', (req, res) =>{
+    let recipeId = req.params.id;
+
+    Recipe.findOneAndRemove({_id: recipeId})
+        .then(() => {
+            res.status(200).json({'id': recipeId});
+        })
+        .catch(() => {
+                res.status(400).json({'error' : 'bad request'})
+        })
 });
 
 module.exports  = routes;
