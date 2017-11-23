@@ -27,49 +27,28 @@ routes.get('/recipes/:id', (req, res) => {
 });
 
 routes.post('/recipes', (req, res) =>{
-    reqRecipe = req.body;
-    let ingredientIds = [];
-    promiseArray = [];
-
-    for(let i of reqRecipe.ingredients){
-        let ingredient = new Ingriedient(i);
-        promiseArray.push(ingredient.save());
-    }
-
-    Promise.all(promiseArray)
-        .then((result) => {
-            for(let r of result){
-                ingredientIds.push(r._id);
-            }
-            reqRecipe.ingredients = ingredientIds;
-            let recipe = new Recipe(reqRecipe);
-
-            recipe.save()
-                .then((recipe) => {
-                    res.status(200).json(recipe);
-                })
-                .catch((error) =>{
-                    res.status(400).json(error);
-                });
+    let recipe = new Recipe(req.body);
+    recipe.save()
+        .then((recipe) => {
+            res.status(200).json(recipe);
+        })
+        .catch((error) => {
+            res.json(400).json(error);
         });
 });
 
 routes.put('/recipes/:id', (req, res) => {
     let recipeId = req.params.id;
-    let recipe = req.body;
+    let recipe = new Recipe(req.body);
 
-    Recipe.findOneAndUpdate(
-        recipeId,
-        {name: recipe.name},
-        {imagePath: recipe.imagePath},
-        {description: recipe.description},)
-        .then((recipe) =>{
-            Recipe.findById(recipeId);
-            res.status(200).json(recipe);
+    Recipe.findByIdAndUpdate(recipeId, recipe)
+        .then((recipe) => {
+            res.status(200).json(recipe)
         })
-        .catch(() => {
-            res.status(400).json({'error' : 'bad request'})
-        })
+        .catch((error) => {
+            res.status(400).json(error);
+        });
+
 });
 
 routes.delete('/recipes/:id', (req, res) =>{
