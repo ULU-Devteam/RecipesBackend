@@ -1,0 +1,27 @@
+{
+  "name": "recipesbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongoose": "^4.13.4",
+    "nodemon": "^1.12.1"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Whrabbit/RecipesBackend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Whrabbit/RecipesBackend/issues"
+  },
+  "homepage": "https://github.com/Whrabbit/RecipesBackend#readme"
+}
