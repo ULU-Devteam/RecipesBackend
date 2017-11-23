@@ -20,8 +20,13 @@ routes.delete('/shoppingList', function (req, res) {
 	ShoppingList.findOne().populate('ingredients')
 		.then((list) => {
 			list.ingredients = [];
-			list.save();
-			res.status(200).json(list);
+			list.save()
+				.then((savedList) => {
+					res.status(200).json(savedList);
+				})
+				.catch((error) => {
+					res.status(400).json(error);
+				});
 		})
 		.catch((error) => {
 			res.status(400).json(error);
@@ -38,9 +43,15 @@ routes.post('/shoppingList/ingredient/:id', (req, res) => {
 		.then((values) => {
 			const list = values[0];
 			const ingredient = values[1];
+
 			list.ingredients.push(ingredient);
-			list.save();
-			res.status(200).json(list);
+			list.save()
+				.then((savedList) => {
+					res.status(200).json(savedList);
+				})
+				.catch((error) => {
+					res.status(400).json(error);
+				});
 		})
 		.catch((error) => {
 			res.status(400).json(error);
