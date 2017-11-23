@@ -4,7 +4,15 @@ const Ingredient = require('../model/ingredient.model');
 const ShoppingList = require('../model/shoppingList.model');
 
 routes.get('/shoppingList', function (req, res) {
-	res.status(200).json('die shit werkt');
+
+	ShoppingList.findOne().populate('ingredients')
+		.then((list) => {
+			res.status(200).json(list);
+		})
+		.catch((error) => {
+			res.status(400).json(error);
+		});
+
 });
 
 routes.post('/shoppingList/ingredient/:id', (req, res) => {
@@ -12,14 +20,17 @@ routes.post('/shoppingList/ingredient/:id', (req, res) => {
 	Promise.all([
 		ShoppingList.findOne().populate('ingredients'),
 		Ingredient.findById(req.params.id)
-	]).then((values) => {
-		const list = values[0];
-		const ingredient = values[1];
-
-		list.ingredients.push(ingredient);
-		list.save();
-		res.status(200).json(list);
-	});
+	])
+		.then((values) => {
+			const list = values[0];
+			const ingredient = values[1];
+			list.ingredients.push(ingredient);
+			list.save();
+			res.status(200).json(list);
+		})
+		.catch((error) => {
+			res.status(400).json(error);
+		});
 
 });
 
