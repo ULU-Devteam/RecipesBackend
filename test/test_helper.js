@@ -1,10 +1,19 @@
 const mongoose = require('mongoose');
-const mocha = require('mocha');
 
 mongoose.Promise = global.Promise;
 
-// beforeEach((done) => {
-//
-// 	const { shoppingList, ingredients, recipes } = mongoose.connection.collections;
-// 	shoppingList.drop()
-// });
+before((done) => {
+	mongoose.connect('mongodb://localhost/recipemongodb_test');
+	mongoose.connection
+		.once('open', () => done())
+		.on('error', (err) => {
+			console.warn('Warning', err);
+		});
+});
+
+beforeEach((done) => {
+	const { shoppinglists } = mongoose.connection.collections;
+	shoppinglists.drop()
+		.then(() => done())
+		.catch(() => done())
+});

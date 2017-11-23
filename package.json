@@ -12,7 +12,7 @@
     "mocha": "^4.0.1"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "SET NODE_ENV=test&& nodemon --exec mocha --recursive -R min"
   },
   "repository": {
     "type": "git",

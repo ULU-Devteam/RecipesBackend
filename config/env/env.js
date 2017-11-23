@@ -9,7 +9,6 @@ let env = {
 
 let dburl = process.env.NODE_ENV === 'production' ?
     'mongodb://' + env.dbUser + ':' + env.dbPassword + '@' + env.dbHost + ':' + env.dbPort + '/' + env.dbDatabase :
-    process.env.NODE_ENV === 'test' ? 'mongodb://localhost/recipemongodb_test' :
     'mongodb://localhost/' + env.dbDatabase;
 
 module.exports = {
