@@ -1,7 +1,7 @@
 const express = require('express');
 const routes = express.Router();
 const ShoppingList = require('../model/shoppingList.model');
-const IngredientSchema = require('../schema/ingredient.schema');
+const mongoose = require('mongoose');
 
 routes.get('/shoppingList', function (req, res) {
 
@@ -52,6 +52,38 @@ routes.post('/shoppingList/ingredient', (req, res) => {
 		.catch((error) => {
 			res.status(400).json(error);
 		});
+
+});
+
+routes.delete('/shoppingList/ingredient/:id', (req, res) => {
+
+	const id = mongoose.Types.ObjectId(req.params.id);
+
+	ShoppingList.findOne()
+		.then((list) => {
+			list.ingredients.id(id).remove()
+				.catch((error) => {
+					res.status(400).json(error);
+				});
+			return list;
+		})
+		.then((list) => {
+			list.save()
+				.then(() => {
+					res.status(200).json(list);
+				})
+				.catch((error) => {
+					res.status(400).json(error);
+				})
+		})
+		.catch((error) => {
+			res.status(400).json(error);
+		});
+
+});
+
+routes.put('/shoppingList/ingredient/:id', (req, res) => {
+	console.log('put');
 });
 
 module.exports = routes;
