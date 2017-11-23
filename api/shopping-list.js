@@ -15,6 +15,20 @@ routes.get('/shoppingList', function (req, res) {
 
 });
 
+routes.delete('/shoppingList', function (req, res) {
+
+	ShoppingList.findOne().populate('ingredients')
+		.then((list) => {
+			list.ingredients = [];
+			list.save();
+			res.status(200).json(list);
+		})
+		.catch((error) => {
+			res.status(400).json(error);
+		});
+
+});
+
 routes.post('/shoppingList/ingredient/:id', (req, res) => {
 
 	Promise.all([
