@@ -39,7 +39,7 @@ routes.post('/recipes', (req, res) =>{
 
 routes.put('/recipes/:id', (req, res) => {
     let recipeId = req.params.id;
-    let recipe = new Recipe(req.body);
+    let recipe = req.body;
 
     Recipe.findByIdAndUpdate(recipeId, recipe)
         .then((recipe) => {
