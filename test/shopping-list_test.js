@@ -54,7 +54,7 @@ describe('Querying the shopping-list in the database successfully', () => {
 			});
 	});
 
-	it('removes an ingredient from the shopping-list', (done) => {
+	xit('removes an ingredient from the shopping-list', (done) => {
 
 		ShoppingList.findOne()
 			.then((shoppingList) => {
