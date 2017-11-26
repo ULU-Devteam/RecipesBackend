@@ -38,8 +38,12 @@ routes.post('/shoppingList/ingredient', (req, res) => {
 
 	ShoppingList.findOne()
 		.then((list) => {
-			for (let ing of req.body) {
-				list.ingredients.push(ing);
+			if (req.body instanceof Array) {
+				for (let ing of req.body) {
+					list.ingredients.push(ing);
+				}
+			} else {
+				list.ingredients.push(req.body);
 			}
 			list.save()
 				.then((savedList) => {
@@ -83,7 +87,28 @@ routes.delete('/shoppingList/ingredient/:id', (req, res) => {
 });
 
 routes.put('/shoppingList/ingredient/:id', (req, res) => {
-	console.log('put');
+
+	const id = mongoose.Types.ObjectId(req.params.id);
+	const ingredient = req.body;
+
+	ShoppingList.findOne()
+		.then((list) => {
+			list.ingredients.id(id).set(ingredient);
+			return list;
+		})
+		.then((list) => {
+			list.save()
+				.then(() => {
+					res.status(200).json(list);
+				})
+				.catch((error) => {
+					res.status(400).json(error);
+				})
+		})
+		.catch((error) => {
+			res.status(400).json(error);
+		});
+
 });
 
 module.exports = routes;
