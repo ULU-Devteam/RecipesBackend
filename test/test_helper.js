@@ -12,15 +12,11 @@ before((done) => {
 });
 
 beforeEach((done) => {
-	const {recipes, shoppinglists, ingredients } = mongoose.connection.collections;
-	recipes.drop()
+	const {recipes, shoppinglists} = mongoose.connection.collections;
+	shoppinglists.drop()
 		.then(() => {
-			shoppinglists.drop()
-				.then(() => {
-					ingredients.drop()
-						.then(() => done())
-						.catch(() => done())
-				})
+			recipes.drop()
+				.then(() => done())
 				.catch(() => done())
 		})
 		.catch(() => done())
