@@ -106,12 +106,37 @@ describe('Querying the recipes in the database successfully', () => {
             });
     });
 
-    xit('Removes a recipe with ingredients', (done) => {
 
-    });
 
     xit('Remove an ingredient from a recipe', (done) => {
+        const removeRecipe = [{
+            name: 'RecipeUpdate 2',
+            imagePath: 'http://google.com/',
+            description: 'A description for recipe test 2',
+            ingredients: [
+                {
+                    name: 'IngredientUpdate',
+                    amount: 4
+                }]
+        }];
+        Recipe.findOneAndUpdate({name: 'RecipeUpdate 2'}, removeRecipe)
+            .then(() => {
+                Recipe.findOne({name: 'RecipeUpdate 2'})
+                    .then((recipe) => {
+                        //assert(recipe.ingredients.length === 1)
+                        console.log(recipe)
+                        done();
+                    })
+            })
+    });
 
+    it('Removes a recipe with ingredients', (done) => {
+        Recipe.findOneAndRemove({ name:'RecipeUpdate 2' })
+            .then(() => Recipe.findOne({ name: 'RecipeUpdate 2' }))
+            .then((recipe) => {
+                assert(recipe === null);
+                done();
+            });
     });
 
 });

@@ -17,8 +17,8 @@ app.use(bodyParser.json({
     type: 'application/vnd.api+json'
 }));
 
-app.set('port', (process.env.PORT || 3000));
-app.set('env', (process.env.ENV || 'development'))
+app.set('port', (process.env.PORT || config.env.webPort));
+app.set('env', (process.env.ENV || 'development'));
 
 
 app.use(function (req, res, next) {
@@ -45,7 +45,7 @@ app.use('*', function (req, res) {
     });
 });
 
-app.listen(3000, function () {
+app.listen(config.env.webPort, function () {
     console.log('De server luistert op port ' + app.get('port'));
 });
 
