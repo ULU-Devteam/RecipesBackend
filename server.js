@@ -1,10 +1,10 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser')
-//var mongodb = require('./config/mongo.db');
+const mongodb = require('./config/mongo.db');
 const recipes = require('./api/recipes');
 const shopping = require('./api/shopping-list');
-// const config = require('./config/env/env');
+const config = require('./config/env/env');
 const app = express();
 
 module.exports = {};
