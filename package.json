@@ -1,8 +1,8 @@
 {
   "name": "recipesbackend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "NoSQL backend koppelen aan de recipe angular project",
+  "main": "server.js",
   "dependencies": {
     "express": "^4.16.2",
     "mongoose": "^4.13.4",
@@ -12,7 +12,8 @@
     "mocha": "^4.0.1"
   },
   "scripts": {
-    "test": "SET NODE_ENV=test&& nodemon --exec mocha --recursive -R min"
+    "test": "node node_modules/mocha/bin/_mocha ./test/*test.js --reporter spec",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
